@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicYo", "ClinicYo\ClinicYo.csproj", "{B1D5A479-3057-418C-82D5-847933FC6E93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clinic.Domain.Model", "Clinic.Domain.Model\Clinic.Domain.Model.csproj", "{DB0F5C8A-2901-4B88-B4D4-3CC597752EE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clinic.DAL", "Clinic.DAL\Clinic.DAL.csproj", "{DA50B8A8-5E70-41E3-868D-5B72F27B2E11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1D5A479-3057-418C-82D5-847933FC6E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D5A479-3057-418C-82D5-847933FC6E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D5A479-3057-418C-82D5-847933FC6E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D5A479-3057-418C-82D5-847933FC6E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB0F5C8A-2901-4B88-B4D4-3CC597752EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0F5C8A-2901-4B88-B4D4-3CC597752EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0F5C8A-2901-4B88-B4D4-3CC597752EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0F5C8A-2901-4B88-B4D4-3CC597752EE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA50B8A8-5E70-41E3-868D-5B72F27B2E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA50B8A8-5E70-41E3-868D-5B72F27B2E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA50B8A8-5E70-41E3-868D-5B72F27B2E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA50B8A8-5E70-41E3-868D-5B72F27B2E11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
