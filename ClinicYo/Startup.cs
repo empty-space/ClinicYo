@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Clinic.DAL;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplicationBasic
+namespace ClinicYo
 {
     public class Startup
     {
@@ -33,8 +33,8 @@ namespace WebApplicationBasic
             var connection = @"Data Source=DESKTOP-HSIM5BD\SQLEXPRESS;Initial Catalog=Clinic_db;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             //@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";            
             services.AddDbContext<ClinicDbContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<DbContext,ClinicDbContext>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(EFGenericRepository<>));
+//            services.AddScoped<DbContext,ClinicDbContext>();
+            services.AddScoped(typeof(EFGenericRepository<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

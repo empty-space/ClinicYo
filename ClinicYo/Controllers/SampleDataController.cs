@@ -6,16 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Clinic.DAL;
 using Clinic.Domain.Model;
 
-namespace WebApplicationBasic.Controllers
+namespace ClinicYo.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
-    {
-        private readonly IGenericRepository<User> _userRepo;
-        public SampleDataController(IGenericRepository<User> userRepo)
-        {
-            _userRepo = userRepo;
-        }
+    public class SampleDataController : BaseController
+    {        
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -36,7 +31,7 @@ namespace WebApplicationBasic.Controllers
         [HttpGet("[action]")]
         public IEnumerable<User> Users()
         {
-            var users = _userRepo.Get();
+            var users = ResolveDefaultDbRepository<User>().Get();
             return users;
         }
 

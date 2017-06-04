@@ -7,12 +7,12 @@ using System.Linq.Expressions;
 
 namespace Clinic.DAL
 {
-    public class EFGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class EFGenericRepository<TContext,TEntity> : IGenericRepository<TEntity> where TContext : DbContext where TEntity : class
     {
-        DbContext _context;
-        DbSet<TEntity> _dbSet;
+        protected TContext _context;
+        protected DbSet<TEntity> _dbSet;
 
-        public EFGenericRepository(DbContext context)
+        public EFGenericRepository(TContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
