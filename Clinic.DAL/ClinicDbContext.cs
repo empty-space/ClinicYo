@@ -26,9 +26,9 @@ namespace Clinic.DAL
         public virtual DbSet<OnlineConsultation> OnlineConsultations { get; set; }
         public virtual DbSet<OnlineConsultationMessage> OnlineConsultationMessages { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<UserMenu> UserMenus { get; set; }
+        public virtual DbSet<UserAccessRight> UserAccessRights { get; set; }
         public virtual DbSet<Worker> Workers { get; set; }
         public virtual DbSet<WorkerKind> WorkerKinds { get; set; }
 

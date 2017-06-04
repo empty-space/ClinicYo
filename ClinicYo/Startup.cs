@@ -26,15 +26,16 @@ namespace ClinicYo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            services.AddMemoryCache();
             services.AddMvc();
-            
+
             //Add Db services
             var connection = @"Data Source=DESKTOP-HSIM5BD\SQLEXPRESS;Initial Catalog=Clinic_db;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             //@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";            
             services.AddDbContext<ClinicDbContext>(options => options.UseSqlServer(connection));
-//            services.AddScoped<DbContext,ClinicDbContext>();
+            //services.AddScoped<DbContext,ClinicDbContext>();
             services.AddScoped(typeof(EFGenericRepository<,>));
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +47,8 @@ namespace ClinicYo
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
                     HotModuleReplacement = true
                 });
             }

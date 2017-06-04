@@ -12,25 +12,31 @@ namespace Clinic.Domain.Model
 
         public Menu()
         {
-            Menu1 = new HashSet<Menu>();
+            AccessRight = new HashSet<AccessRight>();
+            Menus = new HashSet<Menu>();
+            UserMenu = new HashSet<UserMenu>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]
         [StringLength(40)]
         public string Name { get; set; }
 
-        public int RoleId { get; set; }
-
         public int? ParentMenuId { get; set; }
+        
+        public Guid Guid { get; set; }
 
 
-        public virtual ICollection<Menu> Menu1 { get; set; }
+        public virtual ICollection<AccessRight> AccessRight { get; set; }
 
-        public virtual Menu Menu2 { get; set; }
 
-        public virtual Role Role { get; set; }
+        public virtual ICollection<Menu> Menus { get; set; }
+
+        [ForeignKey(nameof(ParentMenuId))]
+        public virtual Menu ParentMenu { get; set; }
+
+
+        public virtual ICollection<UserMenu> UserMenu { get; set; }
     }
 }

@@ -9,18 +9,25 @@ namespace Clinic.Domain.Model
     [Table("AccessRight")]
     public partial class AccessRight
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
+        public AccessRight()
+        {
+            UserAccessRight = new HashSet<UserAccessRight>();
+        }
+
         public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(40)]
-        public string Group { get; set; }
+        public Guid Guid { get; set; }
 
-        public int RoleId { get; set; }
+        public int? MenuId { get; set; }
 
-        public virtual Role Role { get; set; }
+        public virtual Menu Menu { get; set; }
+
+
+        public virtual ICollection<UserAccessRight> UserAccessRight { get; set; }
     }
 }

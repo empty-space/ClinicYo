@@ -4,7 +4,6 @@ namespace Clinic.Domain.Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
 
     [Table("User")]
     public partial class User
@@ -14,11 +13,11 @@ namespace Clinic.Domain.Model
         {
             OnlineConsultationMessage = new HashSet<OnlineConsultationMessage>();
             Patient = new HashSet<Patient>();
-            UserRole = new HashSet<UserRole>();
+            UserAccessRight = new HashSet<UserAccessRight>();
+            UserMenu = new HashSet<UserMenu>();
             Worker = new HashSet<Worker>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]
@@ -29,7 +28,9 @@ namespace Clinic.Domain.Model
         [StringLength(40)]
         public string Login { get; set; }
 
+        [MaxLength(50)]
         public byte[] PasswordHash { get; set; }
+
 
         public virtual ICollection<OnlineConsultationMessage> OnlineConsultationMessage { get; set; }
 
@@ -37,7 +38,10 @@ namespace Clinic.Domain.Model
         public virtual ICollection<Patient> Patient { get; set; }
 
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserAccessRight> UserAccessRight { get; set; }
+
+
+        public virtual ICollection<UserMenu> UserMenu { get; set; }
 
 
         public virtual ICollection<Worker> Worker { get; set; }
