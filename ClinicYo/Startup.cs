@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Clinic.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationBasic
 {
@@ -30,6 +28,13 @@ namespace WebApplicationBasic
         {
             // Add framework services.
             services.AddMvc();
+            
+            //Add Db services
+            var connection = @"Data Source=DESKTOP-HSIM5BD\SQLEXPRESS;Initial Catalog=Clinic_db;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";            
+            services.AddDbContext<ClinicDbContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<DbContext,ClinicDbContext>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EFGenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
