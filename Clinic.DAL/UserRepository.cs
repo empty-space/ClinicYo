@@ -39,5 +39,15 @@ namespace Clinic.DAL
             var md5 = System.Security.Cryptography.MD5.Create();
             return md5.ComputeHash(Encoding.ASCII.GetBytes(password));
         }
+
+        //public User GetUserWithMenuAndAccessRights(int id)
+        //{
+        //    var menus =  _context.UserMenus.AsNoTracking().Include(u => u.Menu).Where(um=>um.UserId==id).ToList();
+        //    var rights = _context.UserAccessRights.AsNoTracking().Include(u => u.AccessRight).Where(ua=>ua.UserId==id).ToList();
+        //    var user = _context.Users.AsNoTracking().First(u=>u.Id==id);
+        //    user.UserAccessRight = rights;
+        //    user.UserMenus = menus;
+        //}
     }
 }
+

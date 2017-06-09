@@ -7,6 +7,10 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { UsersComponent } from './components/users/users.component';
+import { AuthModule } from './modules/auth-module/auth.module';
+import { LoginComponent } from './modules/auth-module/components/login/login.component';
+import { RegistrationComponent } from './modules/auth-module/components/registration/registration.component';
+import { UserDetailsComponent } from './components/users-details/users-details.component';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -16,6 +20,7 @@ export const sharedConfig: NgModule = {
         CounterComponent,
         FetchDataComponent,
         UsersComponent,
+        UserDetailsComponent,
         HomeComponent
     ],
     imports: [
@@ -25,7 +30,12 @@ export const sharedConfig: NgModule = {
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'users', component: UsersComponent },
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegistrationComponent },
+            { path: 'user/:id', component: UserDetailsComponent },
             { path: '**', redirectTo: 'home' }
         ])
+        //,
+        //AuthModule.forRoot()
     ]
 };

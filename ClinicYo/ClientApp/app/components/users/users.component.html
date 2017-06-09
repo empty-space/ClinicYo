@@ -13,9 +13,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users" >
             <td>{{ user.id }}</td>
-            <td>{{ user.login }}</td>
+            <td><a [routerLink]="['/user', user.id]">{{ user.login }}</a></td>
             <td>{{ user.pib }}</td>
         </tr>
     </tbody>

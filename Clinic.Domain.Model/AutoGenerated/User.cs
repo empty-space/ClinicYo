@@ -14,7 +14,7 @@ namespace Clinic.Domain.Model
             OnlineConsultationMessage = new HashSet<OnlineConsultationMessage>();
             Patient = new HashSet<Patient>();
             UserAccessRight = new HashSet<UserAccessRight>();
-            UserMenu = new HashSet<UserMenu>();
+            UserMenus = new HashSet<UserMenu>();
             Worker = new HashSet<Worker>();
         }
 
@@ -41,7 +41,7 @@ namespace Clinic.Domain.Model
         public virtual ICollection<UserAccessRight> UserAccessRight { get; set; }
 
 
-        public virtual ICollection<UserMenu> UserMenu { get; set; }
+        public virtual ICollection<UserMenu> UserMenus { get; set; }
 
 
         public virtual ICollection<Worker> Worker { get; set; }

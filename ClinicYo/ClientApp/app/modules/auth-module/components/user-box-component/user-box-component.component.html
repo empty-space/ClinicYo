@@ -1,0 +1,17 @@
+<!--<ul class="nav navbar-nav navbar-right">
+    <li *ngIf="auth.userCredentials">  {{auth.userCredentials.userName}}</li>
+    <li *ngIf="auth.userCredentials"><a class="btn btn-secondary" (click)="logOut()">Log out</a></li>
+    <li *ngIf="!auth.userCredentials"><a [routerLink]="['/login']">Log In</a></li>
+    <li *ngIf="!auth.userCredentials"><a [routerLink]="['/register']">Registration</a></li>
+</ul>-->
+
+<ul class="nav navbar-nav navbar-right">
+    <template [ngIf]="auth.userCredentials">
+        <li>  {{auth.userCredentials.userName}}</li>
+        <li><a class="btn btn-secondary" (click)="logOut()">Log out</a></li>
+    </template>
+    <template [ngIf]="!auth.userCredentials">
+        <li><a [routerLink]="['/login']">Log In</a></li>
+        <li><a [routerLink]="['/register']">Registration</a></li>
+    </template>
+</ul>

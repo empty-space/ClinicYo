@@ -14,7 +14,7 @@ namespace Clinic.Domain.Model
         {
             AccessRight = new HashSet<AccessRight>();
             Menus = new HashSet<Menu>();
-            UserMenu = new HashSet<UserMenu>();
+            UserMenus = new HashSet<UserMenu>();
         }
 
         public int Id { get; set; }
@@ -37,6 +37,6 @@ namespace Clinic.Domain.Model
         public virtual Menu ParentMenu { get; set; }
 
 
-        public virtual ICollection<UserMenu> UserMenu { get; set; }
+        public virtual ICollection<UserMenu> UserMenus { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Clinic.DAL;
 using Clinic.Domain.Model;
+using ClinicYo.ViewModels;
 
 namespace ClinicYo.Controllers
 {
@@ -33,6 +34,13 @@ namespace ClinicYo.Controllers
         {
             var users = ResolveDefaultDbRepository<User>().Get();
             return users;
+        }
+
+        [HttpGet("users/{id}")]
+        public UserDetailsVm Users(int id)
+        {
+            var user = ResolveDefaultDbRepository<User>().FindById(id);            
+            return new UserDetailsVm(user) { };
         }
 
         public class WeatherForecast

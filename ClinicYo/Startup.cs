@@ -30,10 +30,11 @@ namespace ClinicYo
             services.AddMvc();
 
             //Add Db services
-            var connection = @"Data Source=DESKTOP-HSIM5BD\SQLEXPRESS;Initial Catalog=Clinic_db;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            var connection = "Data Source=\"E:\\Uni\\—“œ-2\\Source\\ClinicYo\\Db\\Clinic_db.db\";";
             //@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";            
-            services.AddDbContext<ClinicDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ClinicDbContext>(options => options.UseSqlite(connection));
             //services.AddScoped<DbContext,ClinicDbContext>();
+            services.AddScoped(typeof(EFClinicDbRepository<>));
             services.AddScoped(typeof(EFGenericRepository<,>));
             services.AddScoped<UserRepository>();
         }

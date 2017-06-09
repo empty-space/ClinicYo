@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="col-sm-12"><h2>Registration</h2><hr /></div>
+  <div class="row justify-content-center">
+    <div class="col">
+      <form>
+        <div class="form-group row">
+          <label for="inputEmail" class="col-sm-12 col-md-4 col-form-label">E-mail</label>
+          <div class="col-sm-12 col-md-8">
+            <input [(ngModel)]="user.email" type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword" class="col-sm-12 col-md-4 col-form-label">PASSWORD</label>
+          <div class="col-sm-12 col-md-8">
+            <input [(ngModel)]="user.password" type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputConfirmPassword" class="col-sm-12 col-md-4 col-form-label">PIB</label>
+          <div class="col-sm-12 col-md-8">
+            <input [(ngModel)]="user.pib" type="text" class="form-control" name="inputPIB" id="inputConfirmPassword"
+              placeholder="">
+          </div>
+        </div>
+          <div class="form-group row justify-content-end">
+              <div class="col-md-4 text-xs-center text-md-right">
+                  <button (click)="register()" class="btn btn-primary">REGISTER</button>
+              </div>
+          </div>
+      </form>
+      <div *ngIf="message" class="row justify-content-center alert alert-warning" role="alert">
+        <strong>{{message}}</strong>
+      </div>
+    </div>
+  </div>
+</div>

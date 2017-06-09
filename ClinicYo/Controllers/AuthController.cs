@@ -14,12 +14,11 @@ namespace ClinicYo.Controllers
     public class AuthController : BaseController
     {
         private readonly UserRepository _userRepo;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public AuthController(UserRepository userRepo, IHttpContextAccessor contextAccessor)
+        public AuthController(UserRepository userRepo)
         {
             _userRepo = userRepo;
-            _contextAccessor = contextAccessor;
+            
         }
 
         private static string[] Summaries = new[]
@@ -31,9 +30,9 @@ namespace ClinicYo.Controllers
         public string Login(LoginUserVm login)
         {
             var user = _userRepo.LogIn(login.Login, login.Password);
-            var guid = Guid.NewGuid().ToString();
-            _contextAccessor.HttpContext.Session.Set(guid, BitConverter.GetBytes(user.Id));
-            return guid;
+            var token = Guid.NewGuid().ToString();
+            HttpContext.Session.Set(token, BitConverter.GetBytes(user.Id));
+            return token;
         }
 
         [HttpPost]
@@ -41,12 +40,12 @@ namespace ClinicYo.Controllers
         {
             var user = new User() { Login = userVm.Login, PIB = userVm.PIB };
             _userRepo.Register(user, userVm.Password);
-            return new RedirectResult(Url.Action(nameof(HomeController.Index), "Home"));
+            return Ok();
         }
 
         public ActionResult LogOut()
         {
-            _contextAccessor.HttpContext.Session.Clear();
+            HttpContext.Session.Clear();
             return new RedirectResult(Url.Action(nameof(HomeController.Index), "Home"));
         }
     }

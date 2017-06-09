@@ -66,6 +66,6 @@ namespace Clinic.DAL
             IQueryable<TEntity> query = _dbSet.AsNoTracking();
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-        }
+        }        
     }
 }

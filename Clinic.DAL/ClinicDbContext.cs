@@ -32,6 +32,19 @@ namespace Clinic.DAL
         public virtual DbSet<Worker> Workers { get; set; }
         public virtual DbSet<WorkerKind> WorkerKinds { get; set; }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<UserMenu>()
+        //        .HasOne(bc => bc.Menu)
+        //        .WithMany(b => b.UserMenus)
+        //        .HasForeignKey(bc => bc.MenuId);
+
+        //    modelBuilder.Entity<UserMenu>()
+        //        .HasOne(bc => bc.User)
+        //        .WithMany(c => c.UserMenus)
+        //        .HasForeignKey(bc => bc.UserId);
+        //}
+
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
         //    modelBuilder.Entity<Analisi>()
