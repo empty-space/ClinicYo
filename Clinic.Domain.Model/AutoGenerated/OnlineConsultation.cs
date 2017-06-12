@@ -12,7 +12,7 @@ namespace Clinic.Domain.Model
 
         public OnlineConsultation()
         {
-            OnlineConsultationMessage = new HashSet<OnlineConsultationMessage>();
+            OnlineConsultationMessages = new HashSet<OnlineConsultationMessage>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -28,7 +28,11 @@ namespace Clinic.Domain.Model
 
         public virtual Worker Worker { get; set; }
 
+        public int PatientId { get; set; }
 
-        public virtual ICollection<OnlineConsultationMessage> OnlineConsultationMessage { get; set; }
+        public virtual Patient Patient { get; set; }
+
+
+        public virtual ICollection<OnlineConsultationMessage> OnlineConsultationMessages { get; set; }
     }
 }

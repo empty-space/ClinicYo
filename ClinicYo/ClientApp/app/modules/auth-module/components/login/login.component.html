@@ -1,29 +1,32 @@
-<!--<div class="container">-->
-<div class="col-sm-12"><h2>Login</h2><hr/></div>
-<div class="row">
-    <form>
-        <div class="form-group row">
-            <label for="inputEmail" class="col-sm-12 col-md-4 col-form-label">E-mail</label>
-            <div class="col-sm-12 col-md-8">
-                <input [(ngModel)]="user.email" type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="">
+<div *ngIf="!auth.user">
+    <!--<div class="container">-->
+    <div class="col-sm-12"><h2>Login</h2><hr /></div>
+    <div class="row">
+        <form>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-12 col-md-4 col-form-label">E-mail</label>
+                <div class="col-sm-12 col-md-8">
+                    <input [(ngModel)]="user.login" class="form-control" name="login" placeholder="">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-12 col-md-4 col-form-label">PASSWORD</label>
-            <div class="col-sm-12 col-md-8">
-                <input [(ngModel)]="user.password" type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="">
+            <div class="form-group row">
+                <label for="inputPassword" class="col-sm-12 col-md-4 col-form-label">PASSWORD</label>
+                <div class="col-sm-12 col-md-8">
+                    <input [(ngModel)]="user.password" type="password" class="form-control" name="password" placeholder="">
+                </div>
             </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <div class="col-md-4 text-xs-center text-md-right">
-                <button (click)="login()" class="btn btn-primary">LOGIN</button>
+            <div class="form-group row justify-content-end">
+                <div class="col-md-4 text-xs-center text-md-right">
+                    <button (click)="login()" class="btn btn-primary">LOGIN</button>
+                </div>
             </div>
-        </div>
-    </form>
-    <div class="row justify-content-center text-center">
-        <div class="col text-sm-center" *ngIf="message" class="alert alert-warning" role="alert">
-            <strong>{{message}}</strong>
+        </form>
+        <div class="row justify-content-center text-center">
+            <div class="col text-sm-center alert alert-warning" *ngIf="message" role="alert">
+                <strong>{{message}}</strong>
+            </div>
         </div>
     </div>
+    <!--</div>-->
 </div>
-<!--</div>-->
+<h3 *ngIf="auth.user">You are logged in!</h3>

@@ -3,103 +3,126 @@ import { Inject } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { UserLoginVM, User, UserRegistrationVM, Locale } from '../models';
-
+//import 'rxjs/add/operator/map'
+import 'rxjs/Rx';
 
 @Injectable()
 export class MembershipService {
-  //siteRootUrl: string = 'http://bogdankolomiec-001-site2.dtempurl.com';
-  user: User = null;
+    //siteRootUrl: string = 'http://bogdankolomiec-001-site2.dtempurl.com';
+    user: User = null;
 
-  constructor(private http: Http, @Inject('ORIGIN_URL') private  siteRootUrl:string) {
-    this.loadUserDataFromLocalStorage();
-  }
-
-  loadUserDataFromLocalStorage() {
-      this.user = JSON.parse(localStorage.getItem('userCredentials'));
-      //if (typeof window !== 'undefined') {
-      //    this.user = JSON.parse(localStorage.getItem('userCredentials'));
-      //}
-  }
-
-  saveUserDataToLocalStorage() {
-      localStorage.setItem('userCredentials', JSON.stringify(this.user));
-  }
-
-  get isAuthorized(): boolean {
-    return this.user != null && this.user.credentials.expiresIn > Date.now();
-  }
-
-  set locale(value: Locale) {
-    if (this.user != null) {
-      this.user.locale = value;
+    constructor(private http: Http, @Inject('ORIGIN_URL') private siteRootUrl: string) {
+        this.loadUserDataFromLocalStorage();
+        this.checkTokenIsAthorized()
     }
-  }
 
-  get locale(): Locale {
-    return this.user != null ? this.user.locale : Locale.Ru;
-  }
+    loadUserDataFromLocalStorage() {
+        this.user = JSON.parse(localStorage.getItem('userCredentials'));
+        //if (typeof window !== 'undefined') {
+        //    this.user = JSON.parse(localStorage.getItem('userCredentials'));
+        //}
+    }
 
-  public logOut() {
-    this.user = null;
-    this.saveUserDataToLocalStorage();
-  }
+    saveUserDataToLocalStorage() {
+        localStorage.setItem('userCredentials', JSON.stringify(this.user));
+    }
 
-  public logIn(user: UserLoginVM): Observable<Response> {
-    let options = this._getXWWWUrlEncodedHeaderOptions();
-    let body = `grant_type=password&username=${user.email}&password=${user.password}`;
+    public checkTokenIsAthorized() {
+        let options = this._getXWWWUrlEncodedHeaderOptions();
+        if (this.user) {
+            let body = `token=${this.user.credentials.accessTocken}`;
 
-    return this.http.post(this.siteRootUrl + '/token', body, options)
-      .map(res => {
-        if (res.status === 200) {
-          let data = res.json();
-          this.user = {
-            credentials: {
-              accessTocken: data.access_token,
-              expiresIn: data.expires_in,
-              tokenType: data.token_type,
-              userName: user.email
-            },
-            locale: Locale.En
-          };
-        } else {
-          // Release
-          // this.user = null;
-
-          // Debug
-          this.user = {
-            credentials: {
-              accessTocken: 'Q@k012jDS(1ALS-1)asdf1@1_!M1z',
-              expiresIn: Date.now(),
-              tokenType: "Bearer",
-              userName: user.email
-            },
-            locale: Locale.En
-          };
+            this.http.post(this.siteRootUrl + '/api/Auth/IsAthorized', body, options)
+                .subscribe(
+                (res) => {
+                    if (res.json() == false) {
+                        this.logOut();
+                    }
+                },
+                (error) => { this.logOut(); });
         }
+    }
+
+    get isAuthorized(): boolean {
+        return this.user != null && this.user.credentials.expiresIn > Date.now();
+    }
+
+    set locale(value: Locale) {
+        if (this.user != null) {
+            this.user.locale = value;
+        }
+    }
+
+    get locale(): Locale {
+        return this.user != null ? this.user.locale : Locale.Ru;
+    }
+
+    public logOut() {
+        this.user = null;
         this.saveUserDataToLocalStorage();
-        return res;
-      });
-  }
+    }
 
-  public registerAdmin(user: UserRegistrationVM): Observable<Response> {
-    return this._register(user, 'Admin');
-  }
+    public logIn(user: UserLoginVM): Observable<Response> {
+        let options = this._getXWWWUrlEncodedHeaderOptions();
+        //let body = `grant_type=password&login=${user.login}&password=${user.password}`;
+        let body = `UserLogin=${user.login}&Password=${user.password}`;
 
-  public register(user: UserRegistrationVM): Observable<Response> {
-    return this._register(user, 'User');
-  }
+        return this.http.post(this.siteRootUrl + '/api/Auth/Login', body, options)
+            //.subscribe((data: Response) =>console.log(data.json()));
+            .map(res => {
+                console.log(res.json())
+                if (res.status === 200) {
+                    let data = res.json();
+                    console.log(data);
+                    this.user = {
+                        credentials: {
+                            accessTocken: data.access_token,
+                            expiresIn: data.expires_in,
+                            tokenType: data.token_type,
+                            userName: user.login,
+                            menus: data.menuNames
+                        },
+                        locale: Locale.En
+                    };
+                } else {
+                    // Release
+                    this.user = null;
 
-  private _register(user: UserRegistrationVM, role: string): Observable<Response> {
-    let options = this._getXWWWUrlEncodedHeaderOptions();
+                    // Debug
+                    //this.user = {
+                    //  credentials: {
+                    //    accessTocken: 'Q@k012jDS(1ALS-1)asdf1@1_!M1z',
+                    //    expiresIn: Date.now(),
+                    //    tokenType: "Bearer",
+                    //    userName: user.email
+                    //  },
+                    //  locale: Locale.En
+                    //};
+                }
+                this.saveUserDataToLocalStorage();
+                return res;
+            });
+    }
 
-    let body = `Login=${user.email}&Password=${user.password}&PIB=${user.pib}`;
+    public registerAdmin(user: UserRegistrationVM): Observable<Response> {
+        return this._register(user, 'Admin');
+    }
 
-    return this.http.post(this.siteRootUrl + '/api/Auth/Register', body);//, options);
-  }
+    public register(user: UserRegistrationVM): Observable<Response> {
+        return this._register(user, 'User');
+    }
 
-  private _getXWWWUrlEncodedHeaderOptions(): RequestOptions {
-    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    let options = new RequestOptions({ headers: headers });
-    return options;
-  }
+    private _register(user: UserRegistrationVM, role: string): Observable<Response> {
+        let options = this._getXWWWUrlEncodedHeaderOptions();
+
+        let body = `Login=${user.email}&Password=${user.password}&PIB=${user.pib}`;
+
+        return this.http.post(this.siteRootUrl + '/api/Auth/Register', body, options);
+    }
+
+    private _getXWWWUrlEncodedHeaderOptions(): RequestOptions {
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers });
+        return options;
+    }
 }

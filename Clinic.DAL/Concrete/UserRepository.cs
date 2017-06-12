@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Clinic.Domain.Model;
 
-namespace Clinic.DAL
+namespace Clinic.DAL.Concrete
 {
     public class UserRepository : EFGenericRepository<ClinicDbContext, User>
     {
@@ -17,6 +17,10 @@ namespace Clinic.DAL
         public bool CheckMenuAccess(Guid menuGuid, int userId)
         {
             return _context.UserMenus.Include(um => um.Menu).Any(um => um.UserId == userId && um.Menu.Guid == menuGuid);
+        }
+        public bool CheckAccessRight(Guid accessRightGuid, int userId)
+        {
+            return _context.UserAccessRights.Include(um => um.AccessRight).Any(uar => uar.UserId == userId && uar.AccessRight.Guid == accessRightGuid);
         }
 
         public User LogIn(string login,string password)
@@ -40,6 +44,10 @@ namespace Clinic.DAL
             return md5.ComputeHash(Encoding.ASCII.GetBytes(password));
         }
 
+        public List<string> GetMenuNames(int userId)
+        {
+           return _context.UserMenus.Include(um => um.Menu).Where(um => um.UserId == userId).Select(um => um.Menu.Name).ToList();
+        }
         //public User GetUserWithMenuAndAccessRights(int id)
         //{
         //    var menus =  _context.UserMenus.AsNoTracking().Include(u => u.Menu).Where(um=>um.UserId==id).ToList();

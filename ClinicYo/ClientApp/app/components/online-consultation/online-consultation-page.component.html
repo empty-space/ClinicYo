@@ -1,0 +1,20 @@
+<h1>My online consultations</h1>
+<hr/>
+<!-- <a class="btn btn-primary" [routerlink]="['/online-consultation/new']">New consultation</a> -->
+<p *ngIf="!myConsultations"><em>Loading...</em></p>
+<div *ngIf="myConsultations">
+    <ng-template [ngIf]="myConsultations.length">
+        <div class="panel panel-default" *ngFor="let consultation of myConsultations">
+            <div class="panel-heading">
+                <!--<a [routerlink]="['/online-consultation', consultation.id]">-->
+                    <a>
+                        {{consultation.name}}
+                    </a><span class="fa fa-user"></span>
+                <span *ngIf="consultation.isClosed" class="glyphicons glyphicons-lock"></span>           
+            </div>
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="!myConsultations.length">
+        <p>There is no consultation.</p>
+    </ng-template>
+</div>

@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Clinic.DAL;
 using Microsoft.EntityFrameworkCore;
+using ClinicYo.Authorization;
+using System;
+using Microsoft.Extensions.Options;
+using Clinic.DAL.Concrete;
 
 namespace ClinicYo
 {
@@ -26,17 +30,27 @@ namespace ClinicYo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = new TimeSpan(12, 0, 0);
+                options.CookieName = ".Cokie.Session";                
+            });
 
+            //ConnectionStrings
+            services.AddSingleton<IConfiguration>(sp => Configuration);
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            
             //Add Db services
-            var connection = "Data Source=\"E:\\Uni\\—“œ-2\\Source\\ClinicYo\\Db\\Clinic_db.db\";";
-            //@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";            
-            services.AddDbContext<ClinicDbContext>(options => options.UseSqlite(connection));
-            //services.AddScoped<DbContext,ClinicDbContext>();
+            var connection = services.BuildServiceProvider().GetService<IOptions<ConnectionStrings>>().Value.ClinicDb;
+            services.AddDbContext<ClinicDbContext>(options => {
+                options.UseSqlite(connection); });
             services.AddScoped(typeof(EFClinicDbRepository<>));
             services.AddScoped(typeof(EFGenericRepository<,>));
             services.AddScoped<UserRepository>();
+            services.AddScoped<AccessRightsRepository>();
+            services.AddScoped<ConsultationsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +71,7 @@ namespace ClinicYo
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -65,6 +79,10 @@ namespace ClinicYo
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "api",
+                    template: "api/{controller}/{action}/{id?}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",

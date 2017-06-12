@@ -6,12 +6,12 @@
 </ul>-->
 
 <ul class="nav navbar-nav navbar-right">
-    <template [ngIf]="auth.userCredentials">
-        <li>  {{auth.userCredentials.userName}}</li>
+    <ng-template [ngIf]="auth.user">
+        <li><a class="btn disabled">{{auth.user.credentials.userName}}</a></li>
         <li><a class="btn btn-secondary" (click)="logOut()">Log out</a></li>
-    </template>
-    <template [ngIf]="!auth.userCredentials">
+    </ng-template>
+    <ng-template [ngIf]="!auth.user">
         <li><a [routerLink]="['/login']">Log In</a></li>
         <li><a [routerLink]="['/register']">Registration</a></li>
-    </template>
+    </ng-template>
 </ul>

@@ -6,18 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using Clinic.DAL;
 using Clinic.Domain.Model;
 using ClinicYo.ViewModels;
+using ClinicYo.Authorization;
+using ClinicYo.Constants;
 
 namespace ClinicYo.Controllers
 {
-    [Route("api/[controller]")]
     public class SampleDataController : BaseController
-    {        
+    {
+        public SampleDataController(EFClinicDbRepository<AccessRight> rightsRepo)
+        {
+            var x = rightsRepo.Get();
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
@@ -29,14 +34,15 @@ namespace ClinicYo.Controllers
             });
         }
 
-        [HttpGet("[action]")]
+        
+        [AuthorizeAccessRight(AccessRightConstants.UserList)]
         public IEnumerable<User> Users()
         {
             var users = ResolveDefaultDbRepository<User>().Get();
             return users;
         }
 
-        [HttpGet("users/{id}")]
+        [HttpGet("[action]/{id}")]
         public UserDetailsVm Users(int id)
         {
             var user = ResolveDefaultDbRepository<User>().FindById(id);            

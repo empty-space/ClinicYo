@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { MembershipService } from './membership.service';
 
 @Injectable()
 export class HttpClient {
-  siteRootUrl: string = 'http://bogdankolomiec-001-site2.dtempurl.com';
 
-  constructor(private http: Http, private auth: MembershipService) { }
+  constructor(private http: Http, private auth: MembershipService, @Inject('ORIGIN_URL') private siteRootUrl: string) { }
 
   createAuthorizationHeader(headers: Headers) {
     if (this.auth.user != null) {
-      headers.append('Authorization', 'Bearer ' + this.auth.user.credentials.accessTocken);
+      headers.append('AuthorizationToken', this.auth.user.credentials.accessTocken);
       headers.set('Content-type', 'application/json');
     }
   }

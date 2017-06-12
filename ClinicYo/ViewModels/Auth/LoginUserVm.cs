@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ClinicYo.ViewModels
     {
         [Required]
         [StringLength(40)]
-        public string Login { get; set; }
+        public string UserLogin { get; set; }
 
         [Required]
         [MaxLength(50)]

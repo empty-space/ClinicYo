@@ -1,4 +1,4 @@
 export class UserLoginVM {
-    email: string;
+    login: string;
     password: string;
 }

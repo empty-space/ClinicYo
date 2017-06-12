@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth-module/auth.module';
 import { LoginComponent } from './modules/auth-module/components/login/login.component';
 import { RegistrationComponent } from './modules/auth-module/components/registration/registration.component';
 import { UserDetailsComponent } from './components/users-details/users-details.component';
+import { OnlineConsultationPage } from './components/online-consultation/online-consultation-page.component';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -21,6 +22,7 @@ export const sharedConfig: NgModule = {
         FetchDataComponent,
         UsersComponent,
         UserDetailsComponent,
+        OnlineConsultationPage,
         HomeComponent
     ],
     imports: [
@@ -33,6 +35,7 @@ export const sharedConfig: NgModule = {
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegistrationComponent },
             { path: 'user/:id', component: UserDetailsComponent },
+            { path: 'online-consultation/my', component: OnlineConsultationPage },
             { path: '**', redirectTo: 'home' }
         ])
         //,

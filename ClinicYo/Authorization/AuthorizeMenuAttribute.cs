@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Clinic.DAL;
+using Clinic.DAL.Concrete;
 
 namespace ClinicYo.Authorization
 {
@@ -25,13 +26,13 @@ namespace ClinicYo.Authorization
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if(context.HttpContext.Request.Headers.TryGetValue("auth_token",out var headerToken))
+            if(context.HttpContext.Request.Headers.TryGetValue("AuthorizationToken", out var headerToken))
             {
                 ValidateMenuAccess(headerToken, context);
             }
             else
             {
-                throw new Exception("No auth_token provided in the header!");
+                throw new Exception("No AuthorizationToken provided in the header!");
             }            
         }
 

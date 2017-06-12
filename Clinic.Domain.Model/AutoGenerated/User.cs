@@ -11,6 +11,7 @@ namespace Clinic.Domain.Model
 
         public User()
         {
+            //Guid = Guid.NewGuid();
             OnlineConsultationMessage = new HashSet<OnlineConsultationMessage>();
             Patient = new HashSet<Patient>();
             UserAccessRight = new HashSet<UserAccessRight>();
@@ -19,6 +20,8 @@ namespace Clinic.Domain.Model
         }
 
         public int Id { get; set; }
+
+        //public Guid Guid { get; set; }
 
         [Required]
         [StringLength(200)]

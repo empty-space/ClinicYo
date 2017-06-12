@@ -27,9 +27,14 @@
                         <span class='glyphicon glyphicon-th-list'></span> Fetch data
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li [routerLinkActive]="['link-active']" *ngIf="checkMenu('Users')">
                     <a [routerLink]="['/users']">
                         <span class='glyphicon glyphicon-th-list'></span> Users
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="checkMenu('Users')">
+                    <a [routerLink]="['/online-consultation/my']">
+                        <span class='glyphicon glyphicon-th-list'></span> Consultations
                     </a>
                 </li>
             </ul>

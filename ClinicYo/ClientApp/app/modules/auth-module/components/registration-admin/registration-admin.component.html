@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="!auth.user">
   <h3>Admin registration</h3>
   <div class="row justify-content-center">
     <div class="col">
@@ -34,3 +34,4 @@
   </div>
 </div>
 </div>
+<h3 *ngIf="auth.user">You are logged in!</h3>
